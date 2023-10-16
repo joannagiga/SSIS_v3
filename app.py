@@ -1,7 +1,8 @@
-from flask import Flask
+from app import create_app
+from dotenv import load_dotenv
 
-app = Flask(__name__)
+load_dotenv('.env')
 
-@app.route("/")
-def hello_world():
-    return "<p>Hello, World!</p>"
+app = create_app()
+#if __name__ == '__main__':
+#    app.run()
