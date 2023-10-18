@@ -21,11 +21,11 @@ def create_app(test_config=None):
     mysql.init_app(app)
     CSRFProtect(app)
 
-    @app.route('/homepage')
+    @app.route('/')
     def homepage():
         return render_template('homepage.html')
 
-    @app.route('/')
+    @app.route('/student')
     def students():
         return render_template('students.html')
     
