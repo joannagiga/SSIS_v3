@@ -8,7 +8,7 @@
 .container {
   max-width: 650px;
   padding: 28px;
-  margin: 20px 28px; /* Adjusted margin to create space */
+  margin: 20px 28px; 
   border-radius: 10px;
   background-color: #008080;
 }
@@ -106,44 +106,32 @@ h2 {
   width: 80px;
 }
 
-/* Adjust the search input */
+
 .form-control {
   width: 80%;
   border-radius: 5px;
   border: 1px solid #ccc;
   outline: none;
-  margin: 20px auto; /* Adjusted margin to create space */
+  margin: 20px auto; 
 }
-
-/* Adjust the search button */
 .btn-outline-primary {
   border-radius: 5px;
-  margin: 20px 0; /* Adjusted margin to create space */
+  margin: 20px 0; 
 }
-
-/* Adjust table styling */
 .table {
   width: 100%;
   margin-top: 20px;
 }
-
-/* Adjust table header text alignment */
 .table thead th {
   text-align: center;
 }
-
-/* Adjust table cell text alignment */
 .table tbody td {
   text-align: center;
 }
-
-/* Adjust action buttons in the table */
 .action-buttons button {
   width: 70px;
   margin-right: 5px;
 }
-
-/* Adjust hover style for action buttons */
 .action-buttons button:hover {
   opacity: 0.7;
 }

@@ -3,6 +3,7 @@ from flask_mysql_connector import MySQL
 from flask_bootstrap import Bootstrap
 from config import DB_USERNAME, DB_PASSWORD, DB_NAME, DB_HOST, SECRET_KEY, BOOTSTRAP_SERVE_LOCAL
 from flask_wtf.csrf import CSRFProtect
+from app.routes import studentroute, courseroute, collegeroute
 
 mysql = MySQL()
 bootstrap = Bootstrap()
@@ -25,16 +26,8 @@ def create_app(test_config=None):
     def homepage():
         return render_template('homepage.html')
 
-    @app.route('/student')
-    def students():
-        return render_template('students.html')
+    app.register_blueprint(collegeroute.college_bp)
+    app.register_blueprint(courseroute.course_bp)
+    app.register_blueprint(studentroute.student_bp)
     
-    @app.route('/course/')
-    def course():
-        return render_template('course.html')
-    
-    @app.route('/college/')
-    def college():
-        return render_template('college.html')
-   
     return app

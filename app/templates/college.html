@@ -25,16 +25,17 @@
   
    <!--CREATE COLLEGE -->
   <div class="container">
-      <form action="" method="post">
+      <form method="post">
         <h2>Create College</h2>
+        <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
         <div class="student-details">
           <div class="input-box">
-            <label for="collegecode">College Code:</label>
-            <input type="text" id="collegecode" name="collegecode" placeholder="Enter College Code" required>
+            <label for="college_code">College Code:</label>
+            <input type="text" id="college_code" name="college_code" placeholder="Enter College Code" required>
           </div>
           <div class="input-box">
-            <label for="collegename">College Name:</label>
-            <input type="text" id="collegename" name="collegename" placeholder="Enter College Name" required>
+            <label for="college_name">College Name:</label>
+            <input type="text" id="college_name" name="college_name" placeholder="Enter College Name" required>
           </div>
           <button type="submit" class="submit-button">SUBMIT</button>
           </div>
@@ -59,22 +60,16 @@
         </tr>
       </thead>
       <tbody>
+        {% for college in colleges %}
         <tr>
-          <td>COL101</td>
-          <td>College of Engineering</td>
-          <td class="action-buttons">
+          <td>{{college.college_code}}</td>
+          <td>{{college.college_name}}</td>
+          <td>
             <button type="button" class="btn btn-success"><i class="fas fa-edit"></i> Edit</button>
             <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i> Delete</button>
           </td>
         </tr>
-        <tr>
-          <td>COL102</td>
-          <td>College of Business</td>
-          <td class="action-buttons">
-            <button type="button" class="btn btn-success"><i class="fas fa-edit"></i> Edit</button>
-            <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i> Delete</button>
-          </td>
-        </tr>
+        {% endfor %}
       </tbody>
     </table>
     <!-- //TABLE -->

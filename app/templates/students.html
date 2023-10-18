@@ -27,39 +27,31 @@
     <div class="container">
       <form action="" method="post">
         <h2>Create Student</h2>
+        <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
         <div class="student-details">
           <div class="input-box">
-            <label for="id">ID Number:</label>
-            <input type="text" id="id" name="id" placeholder="Enter ID Number" required>
+            <label for="ID">ID Number:</label>
+            <input type="text" id="ID" name="ID" placeholder="Enter ID Number" required>
           </div>
           <div class="input-box">
-            <span class="details">Course</span>
-            <input type="text" placeholder="Enter Course" required>
+            <span class="details">Course Code</span>
+            <input type="text" id="course_code" name="course_code" placeholder="Enter Course Code" required>
           </div>
           <div class="input-box">
-            <label for="firstname">First Name:</label>
-            <input type="text" id="firstname" name="firstname" placeholder="Enter First Name" required>
+            <label for="first_name">First Name:</label>
+            <input type="text" id="first_name" name="first_name" placeholder="Enter First Name" required>
           </div>
           <div class="input-box">
-            <label for="YearLevel">Year Level:</label>
-            <select id="YearLevel" name="YearLevel" required>
-              <option value="" disabled selected>Choose Year Level</option>
-              <option value="1st Year">1st Year</option>
-              <option value="2nd Year">2nd Year</option>
-              <option value="3rd Year">3rd Year</option>
-              <option value="4th Year">4th Year</option>
-            </select>
+            <label for="year_level">Year Level:</label>
+            <input type="text" id="year_level" name="year_level" placeholder="Enter Year Level" required>
           </div>
           <div class="input-box">
-            <label for="course">Last Name:</label>
-            <input type="text" id="lastname" name="lastname" placeholder="Enter Last Name" required>
+            <label for="last_name">Last Name:</label>
+            <input type="text" id="last_name" name="last_name" placeholder="Enter Last Name" required>
           </div>
           <span class="gender-title">Gender</span>
           <div class="gender-category">
-            <input type="radio" name="gender" id="male">
-            <label for="male">Male</label>
-            <input type="radio" name="gender" id="female">
-            <label for="female">Female</label>
+            <input type="text" id="gender" name="gender" placeholder="Enter Gender" required>
           </div>
           <button type="submit" class="submit-button">SUBMIT</button>
         </div>
@@ -88,30 +80,20 @@
         </tr>
       </thead>
       <tbody>
-          <tr>
-          <td>1</td>
-          <td>John</td>
-          <td>Doe</td>
-          <td>Male</td>
-          <td>1st Year</td>
-          <td>Computer Science</td>
-          <td class="action-buttons">
-            <button type="button" class="btn btn-success"><i class="fas fa-edit"></i> Edit</button>
-            <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i> Delete</button>
-          </td>
-        </tr>
+        {% for student in students %}
         <tr>
-          <td>1</td>
-          <td>John</td>
-          <td>Doe</td>
-          <td>Male</td>
-          <td>1st Year</td>
-          <td>Computer Science</td>
-          <td class="action-buttons">
+          <td>{{student.ID}}</td>
+          <td>{{student.first_name}}</td>
+          <td>{{student.last_name}}</td>
+          <td>{{student.gender}}</td>
+          <td>{{student.course_code}}</td>
+          <td>{{student.year_level}}</td>
+          <td>
             <button type="button" class="btn btn-success"><i class="fas fa-edit"></i> Edit</button>
             <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i> Delete</button>
           </td>
         </tr>
+        {% endfor %}
       </tbody>
     </table>
     <!--//TABLE -->
