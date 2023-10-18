@@ -1,0 +1,149 @@
+* {
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 650px;
+  padding: 28px;
+  margin: 20px 28px; /* Adjusted margin to create space */
+  border-radius: 10px;
+  background-color: #008080;
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: left;
+  color: #fff;
+  padding-bottom: 8px;
+  border-bottom: 1px solid silver;
+}
+
+.student-details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 20px 0;
+}
+
+.input-box {
+  display: flex;
+  flex-wrap: wrap;
+  width: 50%;
+  padding-bottom: 15px;
+}
+
+.input-box .details {
+  color: #fff;
+  font-weight: bold;
+}
+
+#YearLevel {
+  width: 95%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.input-box label,
+.gender-title {
+  width: 95%;
+  color: #fff;
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+.gender-title {
+  font-size: 16px;
+}
+
+.input-box input {
+  height: 40px;
+  width: 95%;
+  padding: 0 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.input-box:is(:focus, :valid) {
+  box-shadow: 0 3px 6px;
+}
+
+.gender-category {
+  color: gainsboro;
+}
+
+.gender-section {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.submit-button {
+  height: 30px;
+  width: 15%;
+  padding: 0 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  outline: none;
+  color: #fff;
+  background-color: #008080;
+  font-weight: bold;
+  cursor: pointer;
+  float: right;
+}
+
+.submit-button:hover {
+  background-color: #005353;
+}
+
+.action-buttons button {
+  width: 80px;
+}
+
+/* Adjust the search input */
+.form-control {
+  width: 80%;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  outline: none;
+  margin: 20px auto; /* Adjusted margin to create space */
+}
+
+/* Adjust the search button */
+.btn-outline-primary {
+  border-radius: 5px;
+  margin: 20px 0; /* Adjusted margin to create space */
+}
+
+/* Adjust table styling */
+.table {
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* Adjust table header text alignment */
+.table thead th {
+  text-align: center;
+}
+
+/* Adjust table cell text alignment */
+.table tbody td {
+  text-align: center;
+}
+
+/* Adjust action buttons in the table */
+.action-buttons button {
+  width: 70px;
+  margin-right: 5px;
+}
+
+/* Adjust hover style for action buttons */
+.action-buttons button:hover {
+  opacity: 0.7;
+}

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <link rel="stylesheet" type="text/css" href={{url_for('static', filename='css/style.css')}}>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+      integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+    <title>Student Information System</title>
+  </head>
+
+  <body>
+
+  <!-- NAVIGATION BAR -->
+  <nav class="navbar navbar-expand-lg py-3 navbar-light bg-light">
+    <a class="navbar-brand" href="#">STUDENT INFORMATION SYSTEM</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">STUDENT</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">COURSES</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="#">COLLEGES<span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <!-- //NAVIGATION BAR -->
+  
+   <!--CREATE COLLEGE -->
+  <div class="container">
+      <form action="" method="post">
+        <h2>Create College</h2>
+        <div class="student-details">
+          <div class="input-box">
+            <label for="collegecode">College Code:</label>
+            <input type="text" id="collegecode" name="collegecode" placeholder="Enter College Code" required>
+          </div>
+          <div class="input-box">
+            <label for="collegename">College Name:</label>
+            <input type="text" id="collegename" name="collegename" placeholder="Enter College Name" required>
+          </div>
+          <button type="submit" class="submit-button">SUBMIT</button>
+          </div>
+      </form>
+    </div>
+     <!--//CREATE STUDENT-->
+
+    <!-- SEARCH BAR -->
+    <div class="input-group col-md-10 mx-auto text-center">
+      <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+      <button type="button" class="btn btn-outline-primary">search</button>
+    </div>
+    <!-- //SEARCH BAR -->
+
+    <!-- TABLE -->
+    <table class="table col-md-10 mx-auto text-center">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">College Code</th>
+          <th scope="col">College Name</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>COL101</td>
+          <td>College of Engineering</td>
+          <td class="action-buttons">
+            <button type="button" class="btn btn-success"><i class="fas fa-edit"></i> Edit</button>
+            <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i> Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>COL102</td>
+          <td>College of Business</td>
+          <td class="action-buttons">
+            <button type="button" class="btn btn-success"><i class="fas fa-edit"></i> Edit</button>
+            <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i> Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- //TABLE -->
+
+    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+      crossorigin="anonymous"></script>
+  </body>
+</html>
