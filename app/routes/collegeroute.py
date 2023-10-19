@@ -9,7 +9,7 @@ def colleges():
     colleges = college_list()
     return render_template('college.html', colleges=colleges)
 
-@college_bp.route('/college/', methods=['GET', 'POST'])
+@college_bp.route('/college/add', methods=['GET', 'POST'])
 def add_college():
     if request.method == 'POST':
         college_code = request.form['college_code']
@@ -17,4 +17,16 @@ def add_college():
         college_create(college_code, college_name)
         return redirect('/college') 
     return render_template('college.html')
+
+@college_bp.route('/college/search', methods=['GET', 'POST'])
+def search_college():
+    colleges = []
+    if request.method == 'POST':
+        search_query = request.form.get('college_search')
+        if search_query:
+            colleges = find_college(search_query)
+    return render_template('college.html', colleges=colleges)
+
+
+
 

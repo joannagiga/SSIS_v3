@@ -24,7 +24,7 @@
     <!-- //NAVIGATION BAR -->
     <!-- CREATE COURSE -->
     <div class="container">
-      <form method="post">
+      <form method="POST" action="/course/add">
         <h2>Create Course</h2>
         <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
         <div class="student-details">
@@ -47,10 +47,15 @@
     <!-- //CREATE COURSE -->
 
     <!-- SEARCH BAR -->
-    <div class="input-group col-md-10 mx-auto text-center">
-      <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-      <button type="button" class="btn btn-outline-primary">search</button>
-    </div>
+    <form method="POST" action="/course/search">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <div class="input-group col-md-10 mx-auto text-center">
+        <input type="text" class="form-control rounded" name = "course_search" placeholder="Search Course">
+        <div class="input-group-append">
+            <button class="btn btn-outline-primary" type="submit">Search</button>
+        </div>
+      </div>
+    </form>
     <!-- //SEARCH BAR -->
 
     <!-- TABLE-->

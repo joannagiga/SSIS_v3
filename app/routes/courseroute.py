@@ -9,7 +9,7 @@ def course():
     courses = course_list()
     return render_template('course.html', courses=courses)
 
-@course_bp.route('/course/', methods=['GET', 'POST'])
+@course_bp.route('/course/add', methods=['GET', 'POST'])
 def add_course():
     if request.method == 'POST':
         course_code = request.form['course_code']
@@ -18,3 +18,13 @@ def add_course():
         course_create(course_code, course_name, college_code)
         return redirect('/course') 
     return render_template('course.html')
+
+@course_bp.route('/course/search', methods=['GET', 'POST'])
+def search_course():
+    courses = []
+    if request.method == 'POST':
+        search_query = request.form.get('course_search')
+        if search_query:
+            courses = find_course(search_query)
+    return render_template('course.html', courses=courses)
+
