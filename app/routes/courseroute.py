@@ -28,3 +28,9 @@ def search_course():
             courses = find_course(search_query)
     return render_template('course.html', courses=courses)
 
+@course_bp.route('/course/delete/<string:course_code>', methods=['DELETE'])
+def remove_course(course_code):
+    if request.method == 'DELETE':
+        print(course_code)
+        delete_course(course_code)
+        return jsonify({'success': True})

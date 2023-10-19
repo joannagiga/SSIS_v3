@@ -31,3 +31,9 @@ def search_students():
         if search_query:
             students = find_students(search_query)
     return render_template('students.html', students=students)
+
+@student_bp.route('/student/delete/<string:stud_ID>', methods=['DELETE'])
+def remove_student(stud_ID):
+    if request.method == 'DELETE':
+        delete_student(stud_ID)
+        return jsonify({'success': True})

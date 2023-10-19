@@ -71,7 +71,7 @@
           <td>{{college.college_name}}</td>
           <td>
             <button type="button" class="btn btn-success"><i class="fas fa-edit"></i> Edit</button>
-            <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i> Delete</button>
+            <button type="button" class="btn btn-danger" id="deleteCollege" college-code="{{college.college_code}}" csrf-token="{{csrf_token()}}" onclick="deleteCollege(this)"><i class="far fa-trash-alt"></i>Delete</button>
           </td>
         </tr>
         {% endfor %}

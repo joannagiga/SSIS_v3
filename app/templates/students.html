@@ -94,7 +94,8 @@
           <td>{{student.year_level}}</td>
           <td>
             <button type="button" class="btn btn-success"><i class="fas fa-edit"></i> Edit</button>
-            <button type="button" class="btn btn-danger"><i class="far fa-trash-alt"></i> Delete</button>
+            <button type="button" class="btn btn-danger" id="deleteStudent" student-id="{{student.ID}}" 
+            csrf-token="{{csrf_token()}}" onclick="deleteStudent(this)"><i class="far fa-trash-alt"></i>Delete</button>
           </td>
         </tr>
         {% endfor %}
