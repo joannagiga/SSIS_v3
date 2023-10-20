@@ -124,3 +124,12 @@ h2 {
 td form, td button {
   display: inline-block;
 }
+.input-box select {
+  height: 40px; 
+  width: 95%; 
+  padding: 0 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  outline: none;
+  color: #000; 
+}

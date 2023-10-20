@@ -35,7 +35,12 @@
           </div>
           <div class="input-box">
             <label class="details">Course Code</label>
-            <input type="text" id="course_code" name="course_code" placeholder="Enter Course Code" required>
+            <select id="course_code" name="course_code" placeholder="Enter Course Code" required>
+              <option value="" disabled selected>Enter Course Code</option>
+              {% for course in courses %}
+                <option value="{{course.course_code}}">{{course.course_code}}</option>
+              {% endfor %}  
+            </select>  
           </div>
           <div class="input-box">
             <label for="first_name">First Name:</label>
