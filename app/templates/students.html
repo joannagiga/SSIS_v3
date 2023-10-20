@@ -34,7 +34,7 @@
             <input type="text" id="ID" name="ID" placeholder="Enter ID Number" required>
           </div>
           <div class="input-box">
-            <span class="details">Course Code</span>
+            <label class="details">Course Code</label>
             <input type="text" id="course_code" name="course_code" placeholder="Enter Course Code" required>
           </div>
           <div class="input-box">
@@ -49,7 +49,7 @@
             <label for="last_name">Last Name:</label>
             <input type="text" id="last_name" name="last_name" placeholder="Enter Last Name" required>
           </div>
-          <span class="gender-title">Gender</span>
+          <label class="gender-title">Gender</label>
           <div class="gender-category">
             <input type="text" id="gender" name="gender" placeholder="Enter Gender" required>
           </div>
@@ -93,7 +93,15 @@
           <td>{{student.course_code}}</td>
           <td>{{student.year_level}}</td>
           <td>
-            <button type="button" class="btn btn-success"><i class="fas fa-edit"></i> Edit</button>
+            <form action="/student/edit" method="get">
+              <input type="hidden" name="student_id" value="{{ student.ID }}">
+              <input type="hidden" name="first_name" value="{{ student.first_name }}">
+              <input type="hidden" name="last_name" value="{{ student.last_name }}">
+              <input type="hidden" name="gender" value="{{ student.gender }}">
+              <input type="hidden" name="course_code" value="{{ student.course_code }}">
+              <input type="hidden" name="year_level" value="{{ student.year_level }}">
+              <button type="submit" class="btn btn-success"><i class="fas fa-edit"></i>Edit</button>
+            </form>
             <button type="button" class="btn btn-danger" id="deleteStudent" student-id="{{student.ID}}" 
             csrf-token="{{csrf_token()}}" onclick="deleteStudent(this)"><i class="far fa-trash-alt"></i>Delete</button>
           </td>

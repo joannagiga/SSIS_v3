@@ -75,7 +75,12 @@
             <td>{{course.course_name}}</td>
             <td>{{course.college_code}}</td>
             <td>
-              <button type="button" class="btn btn-success"><i class="fas fa-edit"></i> Edit</button>
+              <form action="/course/edit" method="get">
+                <input type="hidden" name="course_code" value="{{ course.course_code }}">
+                <input type="hidden" name="course_name" value="{{ course.course_name}}">
+                <input type="hidden" name="college_code" value="{{ course.college_code}}">
+               <button type="submit" class="btn btn-success"><i class="fas fa-edit"></i>Edit</button>
+              </form>
               <button type="button" class="btn btn-danger" id="deleteCourse" course-code="{{course.course_code}}" 
               csrf-token="{{csrf_token()}}" onclick="deleteCourse(this)"><i class="far fa-trash-alt"></i>Delete</button>
             </td>

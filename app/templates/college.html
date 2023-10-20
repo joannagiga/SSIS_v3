@@ -70,7 +70,11 @@
           <td>{{college.college_code}}</td>
           <td>{{college.college_name}}</td>
           <td>
-            <button type="button" class="btn btn-success"><i class="fas fa-edit"></i> Edit</button>
+            <form action="/college/edit" method="get">
+              <input type="hidden" name="college_code" value="{{ college.college_code }}">
+              <input type="hidden" name="college_name" value="{{ college.college_name}}">
+              <button type="submit" class="btn btn-success"><i class="fas fa-edit"></i>Edit</button>
+            </form>            
             <button type="button" class="btn btn-danger" id="deleteCollege" college-code="{{college.college_code}}" csrf-token="{{csrf_token()}}" onclick="deleteCollege(this)"><i class="far fa-trash-alt"></i>Delete</button>
           </td>
         </tr>

@@ -1,5 +1,5 @@
-{% extends "layout.html" %}
-{% block toggle %}
+{% extends "base.html" %}
+{% block container1 %}
     <nav class="navbar navbar-expand-lg py-3 navbar-light bg-light">
         <a class="navbar-brand" href="/">STUDENT INFORMATION SYSTEM</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -20,41 +20,40 @@
         </ul>
         </div>
     </nav>
-{% endblock %}
-{% block content %}
+
     <!-- CREATE STUDENT -->
     <div class="container">
-        <form  method="post" action="/student/add">
-        <h2>Create Student</h2>
+        <form  method="post">
+        <h2>Edit Student</h2>
         <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
         <div class="student-details">
             <div class="input-box">
-            <label for="ID">ID Number:</label>
-            <input type="text" id="ID" name="ID" placeholder="Enter ID Number" required>
+            <label for="student_id">ID Number:</label>
+            <input type="text" id="student_id" name="student_id" value="{{student_id}}" disabled required>
+            <input type="hidden" name="student_id" value="{{student_id}}">
             </div>
             <div class="input-box">
-            <span class="details">Course Code</span>
-            <input type="text" id="course_code" name="course_code" placeholder="Enter Course Code" required>
+            <label class="details">Course Code</label>
+            <input type="text" id="course_code" name="course_code" value="{{course_code}}" required>
             </div>
             <div class="input-box">
-            <label for="first_name">First Name:</label>
-            <input type="text" id="first_name" name="first_name" placeholder="Enter First Name" required>
+            <label for="first_name">First Name</label>
+            <input type="text" id="first_name" name="first_name" value="{{first_name}}" required>
             </div>
             <div class="input-box">
-            <label for="year_level">Year Level:</label>
-            <input type="text" id="year_level" name="year_level" placeholder="Enter Year Level" required>
+            <label for="year_level">Year Level</label>
+            <input type="text" id="year_level" name="year_level" value="{{year_level}}" required>
             </div>
             <div class="input-box">
-            <label for="last_name">Last Name:</label>
-            <input type="text" id="last_name" name="last_name" placeholder="Enter Last Name" required>
+            <label for="last_name">Last Name</label>
+            <input type="text" id="last_name" name="last_name" value="{{last_name}}" required>
             </div>
-            <span class="gender-title">Gender</span>
+            <label class="gender-title">Gender</label>
             <div class="gender-category">
-            <input type="text" id="gender" name="gender" placeholder="Enter Gender" required>
+            <input type="text" id="gender" name="gender" value="{{gender}}" required>
             </div>
-            <button type="submit" class="submit-button">SUBMIT</button>
+            <button type="submit" class="submit-button">UPDATE</button>
         </div>
         </form>
     </div>
-    <!-- //CREATE STUDENT -->
 {% endblock%}

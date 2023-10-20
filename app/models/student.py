@@ -33,12 +33,12 @@ def delete_student(stud_ID):
 
 def update_student(student_id, first_name, last_name, gender, course_code, year_level):
     cursor = mysql.connection.cursor()
-    update_query = "UPDATE student SET first_name = %s, last_name = %s, gender = %s, course_code = %s, year_level = %s,  WHERE ID = %s"
+    update_query = "UPDATE student SET first_name = %s, last_name = %s, gender = %s, course_code = %s, year_level = %s WHERE ID = %s"
     cursor.execute(update_query, (first_name, last_name, gender, course_code, year_level, student_id))
     mysql.connection.commit()
     cursor.close()
     
-def get_course_codes():
+def get_courseCode():
     cursor = mysql.connection.cursor(dictionary=True)
     query = "SELECT course_code FROM course"
     cursor.execute(query)

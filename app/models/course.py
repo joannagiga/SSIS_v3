@@ -29,4 +29,18 @@ def delete_course(course_code):
     cursor.execute("DELETE FROM course WHERE course_code = %s", (course_code,))
     mysql.connection.commit()
     cursor.close()
-    
+
+def update_course(course_code, course_name, college_code):
+    cursor = mysql.connection.cursor()
+    update_query = "UPDATE course SET course_name = %s, college_code= %s WHERE course_code =%s"
+    cursor.execute(update_query, (course_name, college_code, course_code))
+    mysql.connection.commit()
+    cursor.close()
+
+def get_collegeCode():
+    cursor = mysql.connection.cursor(dictionary=True)
+    query = "SELECT college_code FROM college"
+    cursor.execute(query)
+    college_code = cursor.fetchall()
+    cursor.close()
+    return college_code
