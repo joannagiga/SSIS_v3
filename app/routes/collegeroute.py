@@ -38,7 +38,7 @@ def remove_college(college_code):
 def edit_college():
     if request.method == 'POST':
         college_code = request.form.get('college_code').upper()
-        college_name = request.form.get('college_name').title()
+        college_name = request.form.get('college_name')
         update_college(college_code, college_name)
         return redirect('/college/') 
     college_code = request.args.get('college_code')

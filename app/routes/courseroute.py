@@ -39,7 +39,7 @@ def remove_course(course_code):
 def edit_course():
     if request.method == 'POST':
         course_code = request.form.get('course_code')
-        course_name = request.form.get('course_name').title()
+        course_name = request.form.get('course_name')
         college_code = request.form.get('college_code').upper()
         update_course(course_code, course_name, college_code)
         return redirect('/course/') 
