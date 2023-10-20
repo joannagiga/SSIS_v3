@@ -37,7 +37,14 @@
             </div>
             <div class="input-box">
             <label for="college_code">College Code:</label>
-            <input type="text" id="college_code" name="college_code" value="{{college_code}}" required>
+            <select id="college_code" name="college_code"  placeholder="Enter College Code" required>
+                <option value="{{college_code}}">{{college_code}}</option>
+                {% for college in colleges %}
+                    {% if college.college_code != college_code %}
+                        <option value="{{college.college_code}}">{{college.college_code}}</option>
+                    {% endif %}
+                {% endfor %}  
+                </select>  
             </div>
             <button type="submit" class="submit-button">SUBMIT</button>
             </div>

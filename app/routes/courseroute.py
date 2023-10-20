@@ -7,7 +7,8 @@ course_bp = Blueprint('course', __name__)
 @course_bp.route('/course/')
 def course():
     courses = course_list()
-    return render_template('course.html', courses=courses)
+    colleges = get_collegeCode()
+    return render_template('course.html', courses=courses, colleges=colleges)
 
 @course_bp.route('/course/add', methods=['GET', 'POST'])
 def add_course():

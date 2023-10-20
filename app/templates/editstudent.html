@@ -34,14 +34,14 @@
             </div>
             <div class="input-box">
             <label class="details">Course Code</label>
-            <select id="course_code" name="course_code" placeholder="Enter Course Code" required>
+                <select id="course_code" name="course_code" placeholder="Enter Course Code" required>
                 <option value="{{course_code}}">{{course_code}}</option>
                 {% for course in courses %}
                     {% if course.course_code != course_code %}
                         <option value="{{course.course_code}}">{{course.course_code}}</option>
                     {% endif %}
                 {% endfor %}  
-              </select>  
+                </select>  
             </div>
             <div class="input-box">
             <label for="first_name">First Name</label>
