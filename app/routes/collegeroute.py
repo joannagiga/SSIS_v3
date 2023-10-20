@@ -12,7 +12,7 @@ def colleges():
 @college_bp.route('/college/add', methods=['GET', 'POST'])
 def add_college():
     if request.method == 'POST':
-        college_code = request.form['college_code']
+        college_code = request.form['college_code'].upper()
         college_name = request.form['college_name']
         college_create(college_code, college_name)
         return redirect('/college') 

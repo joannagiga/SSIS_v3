@@ -13,10 +13,10 @@ def students():
 def add_student():
     if request.method == 'POST':
         student_ID = request.form['ID']
-        first_name= request.form['first_name']
-        last_name = request.form['last_name']
-        gender = request.form['gender']
-        course_code = request.form['course_code']
+        first_name= request.form['first_name'].title()
+        last_name = request.form['last_name'].title()
+        gender = request.form['gender'].capitalize()
+        course_code = request.form['course_code'].upper()
         year_level = request.form['year_level']
         student_create(student_ID, first_name, last_name, gender, course_code, year_level)
         return redirect('/student') 

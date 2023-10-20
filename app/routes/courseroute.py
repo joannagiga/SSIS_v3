@@ -14,7 +14,7 @@ def add_course():
     if request.method == 'POST':
         course_code = request.form['course_code']
         course_name = request.form['course_name']
-        college_code = request.form['college_code']
+        college_code = request.form['college_code'].upper()
         course_create(course_code, course_name, college_code)
         return redirect('/course') 
     return render_template('course.html')
