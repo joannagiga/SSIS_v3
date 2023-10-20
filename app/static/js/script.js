@@ -55,3 +55,21 @@ function deleteStudent(button) {
         });        
     }
 }
+function editStudent(studentID, firstName, lastName, gender, courseCode, yearLevel) {
+    // Fill in the form fields with the student's information
+    document.getElementById('editStudentID').value = studentID;
+    document.getElementById('editFirstName').value = firstName;
+    document.getElementById('editLastName').value = lastName;
+    document.getElementById('editGender').value = gender;
+    document.getElementById('editCourseCode').value = courseCode;
+    document.getElementById('editYearLevel').value = yearLevel;
+
+    // Show the edit form
+    document.getElementById('editForm').style.display = 'block';
+}
+
+function cancelEdit() {
+    // Hide the edit form
+    document.getElementById('editForm').style.display = 'none';
+}
+

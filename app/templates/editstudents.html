@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+{% block toggle %}
+    <nav class="navbar navbar-expand-lg py-3 navbar-light bg-light">
+        <a class="navbar-brand" href="/">STUDENT INFORMATION SYSTEM</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+            <a class="nav-link" href="/student">STUDENT<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="/course">COURSES</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="/college">COLLEGES</a>
+            </li>
+        </ul>
+        </div>
+    </nav>
+{% endblock %}
+{% block content %}
+    <!-- CREATE STUDENT -->
+    <div class="container">
+        <form  method="post" action="/student/add">
+        <h2>Create Student</h2>
+        <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
+        <div class="student-details">
+            <div class="input-box">
+            <label for="ID">ID Number:</label>
+            <input type="text" id="ID" name="ID" placeholder="Enter ID Number" required>
+            </div>
+            <div class="input-box">
+            <span class="details">Course Code</span>
+            <input type="text" id="course_code" name="course_code" placeholder="Enter Course Code" required>
+            </div>
+            <div class="input-box">
+            <label for="first_name">First Name:</label>
+            <input type="text" id="first_name" name="first_name" placeholder="Enter First Name" required>
+            </div>
+            <div class="input-box">
+            <label for="year_level">Year Level:</label>
+            <input type="text" id="year_level" name="year_level" placeholder="Enter Year Level" required>
+            </div>
+            <div class="input-box">
+            <label for="last_name">Last Name:</label>
+            <input type="text" id="last_name" name="last_name" placeholder="Enter Last Name" required>
+            </div>
+            <span class="gender-title">Gender</span>
+            <div class="gender-category">
+            <input type="text" id="gender" name="gender" placeholder="Enter Gender" required>
+            </div>
+            <button type="submit" class="submit-button">SUBMIT</button>
+        </div>
+        </form>
+    </div>
+    <!-- //CREATE STUDENT -->
+{% endblock%}

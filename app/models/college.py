@@ -31,4 +31,5 @@ def delete_college(college_code):
     cursor.close()
     
 
+
     
