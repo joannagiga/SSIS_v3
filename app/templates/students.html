@@ -23,70 +23,47 @@
     </nav>
     <!-- //NAVIGATION BAR -->
 
-    <!-- CREATE STUDENT -->
-    <div class="container">
-      <form  method="post" action="/student/add">
-        <h2>Create Student</h2>
-        <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
-        <div class="student-details">
-          <div class="input-box">
-            <label for="ID">ID Number:</label>
-            <input type="text" id="ID" name="ID" placeholder="Enter ID Number" required>
-          </div>
-          <div class="input-box">
-            <label class="details">Course Code</label>
-            <select id="course_code" name="course_code" placeholder="Enter Course Code" required>
-              <option value="" disabled selected>Enter Course Code</option>
-              {% for course in courses %}
-                <option value="{{course.course_code}}">{{course.course_code}}</option>
-              {% endfor %}  
-            </select>  
-          </div>
-          <div class="input-box">
-            <label for="first_name">First Name:</label>
-            <input type="text" id="first_name" name="first_name" placeholder="Enter First Name" required>
-          </div>
-          <div class="input-box">
-            <label for="year_level">Year Level:</label>
-            <input type="text" id="year_level" name="year_level" placeholder="Enter Year Level" required>
-          </div>
-          <div class="input-box">
-            <label for="last_name">Last Name:</label>
-            <input type="text" id="last_name" name="last_name" placeholder="Enter Last Name" required>
-          </div>
-          <label class="gender-title">Gender</label>
-          <div class="gender-category">
-            <input type="text" id="gender" name="gender" placeholder="Enter Gender" required>
-          </div>
-          <button type="submit" class="submit-button">SUBMIT</button>
-        </div>
-      </form>
+<!-- SEARCH BAR -->
+<form method="POST" action="/student/search">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="input-group col-md-10 mx-auto text-center">
+    <label class="input-group-prepend">
+      <label class="input-group-text">Filter by:</label>
+    </label>
+    <select name="filter" class="form-control">
+      <option value="">All</option>
+      <option value="ID">ID Number</option>
+      <option value="first_name">First Name</option>
+      <option value="last_name">Last Name</option>
+      <option value="course_code">Course</option>
+      <option value="year_level">Year Level</option>
+      <option value="gender">Gender</option>
+    </select>
+    <input type="text" class="form-control rounded" name="studentsearch" placeholder="Search Student">
+    <div class="input-group-append">
+      <button class="btn btn-outline-primary" type="submit">Search</button>
     </div>
-    <!-- //CREATE STUDENT -->
+    <div style="padding: 10px; margin-top: 10px;"> 
+      <a class="btn btn-success" href="/student/add">ADD STUDENT</a>
+    </div>
+  </div>
+</form>
 
-    <!-- SEARCH BAR -->
-    <form method="POST" action="/student/search">
-      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-      <div class="input-group col-md-10 mx-auto text-center">
-        <input type="text" class="form-control rounded" name = "studentsearch" placeholder="Search Student">
-        <div class="input-group-append">
-            <button class="btn btn-outline-primary" type="submit">Search</button>
-        </div>
-      </div>
-    </form>
-
+<!-- TABLE CONTAINER -->
+<div class="table-container col-md-10 mx-auto text-center">
+  <!-- SCROLL BAR -->
+  <div class="scrollbar" style="max-height: 430px; overflow: auto;">
     <!-- TABLE -->
-    <div style="max-height: 200px; overflow: auto;">
-    <table class="table col-md-10 mx-auto text-center">
+    <table class="table">
       <thead class="thead-light">
         <tr>
-          <th scope="col">ID Number</th>
-          <th scope="col">First Name</th>
-          <th scope="col">Last Name</th>
-          <th scope="col">Gender</th>
-          <th scope="col">Year Level</th>
-          <th scope="col">Course</th>
-          <th scope="col">Actions</th>
+          <th scope="col" style="position: sticky; top: 0; background-color: #f5f5f5; z-index: 1;">ID Number</th>
+          <th scope="col" style="position: sticky; top: 0; background-color: #f5f5f5; z-index: 1;">First Name</th>
+          <th scope="col" style="position: sticky; top: 0; background-color: #f5f5f5; z-index: 1;">Last Name</th>
+          <th scope="col" style="position: sticky; top: 0; background-color: #f5f5f5; z-index: 1;">Gender</th>
+          <th scope="col" style="position: sticky; top: 0; background-color: #f5f5f5; z-index: 1;">Course</th>
+          <th scope="col" style="position: sticky; top: 0; background-color: #f5f5f5; z-index: 1;">Year Level</th>
+          <th scope="col" style="position: sticky; top: 0; background-color: #f5f5f5; z-index: 1;">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -116,5 +93,6 @@
       </tbody>
     </table>
   </div>
-    <!--//TABLE -->
+</div>
+
 {% endblock %}

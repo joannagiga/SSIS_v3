@@ -22,47 +22,32 @@
     </div>
   </nav>
   <!-- //NAVIGATION BAR -->
-  
-   <!--CREATE COLLEGE -->
-  <div class="container">
-    <form method="POST" action="/college/add">
-        <h2>Create College</h2>
-        <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
-        <div class="student-details">
-          <div class="input-box">
-            <label for="college_code">College Code:</label>
-            <input type="text" id="college_code" name="college_code" placeholder="Enter College Code" required>
-          </div>
-          <div class="input-box">
-            <label for="college_name">College Name:</label>
-            <input type="text" id="college_name" name="college_name" placeholder="Enter College Name" required>
-          </div>
-          <button type="submit" class="submit-button">SUBMIT</button>
-          </div>
-      </form>
+
+<!-- SEARCH BAR -->
+<form method="POST" action="/college/search">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="input-group col-md-10 mx-auto text-center">
+    <input type="text" class="form-control rounded" name="college_search" placeholder="Search College">
+    <div class="input-group-append">
+      <button class="btn btn-outline-primary" type="submit">Search</button>
     </div>
-     <!--//CREATE STUDENT-->
+    <div style="padding: 10px; margin-top: 10px;"> 
+      <a class="btn btn-success" href="/college/add">ADD COLLEGE</a>
+    </div>
+  </div>
+</form>
 
-    <!-- SEARCH BAR -->
-    <form method="POST" action="/college/search">
-      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-      <div class="input-group col-md-10 mx-auto text-center">
-        <input type="text" class="form-control rounded" name = "college_search" placeholder="Search College">
-        <div class="input-group-append">
-            <button class="btn btn-outline-primary" type="submit">Search</button>
-        </div>
-      </div>
-    </form>
-    <!-- //SEARCH BAR -->
-
+<!-- TABLE CONTAINER -->
+<div class="table-container col-md-10 mx-auto text-center">
+  <!-- SCROLL BAR -->
+  <div class="scrollbar" style="max-height: 430px; overflow: auto;">
     <!-- TABLE -->
-    <div style="max-height: 200px; overflow: auto;">
-    <table class="table col-md-10 mx-auto text-center">
+    <table class="table">
       <thead class="thead-light">
         <tr>
-          <th scope="col">College Code</th>
-          <th scope="col">College Name</th>
-          <th scope="col">Actions</th>
+          <th scope="col" style="position: sticky; top: 0; background-color: #f5f5f5; z-index: 1;">College Code</th>
+          <th scope="col" style="position: sticky; top: 0; background-color: #f5f5f5; z-index: 1;">College Name</th>
+          <th scope="col" style="position: sticky; top: 0; background-color: #f5f5f5; z-index: 1;">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -75,13 +60,15 @@
               <input type="hidden" name="college_code" value="{{ college.college_code }}">
               <input type="hidden" name="college_name" value="{{ college.college_name}}">
               <button type="submit" class="btn btn-success"><i class="fas fa-edit"></i>Edit</button>
-            </form>            
-            <button type="button" class="btn btn-danger" id="deleteCollege" college-code="{{college.college_code}}" csrf-token="{{csrf_token()}}" onclick="deleteCollege(this)"><i class="far fa-trash-alt"></i>Delete</button>
+            </form>
+            <button type="button" class="btn btn-danger" id="deleteCollege" college-code="{{college.college_code}}"
+              csrf-token="{{csrf_token()}}" onclick="deleteCollege(this)"><i class="far fa-trash-alt"></i>Delete</button>
           </td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
-    <!-- //TABLE -->
+  </div>
+</div>
 {% endblock %}
 

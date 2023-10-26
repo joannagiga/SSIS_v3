@@ -17,10 +17,36 @@ def student_create(ID, first_name, last_name, gender, course_code, year_level):
     cursor.close()
     
     
-def find_students(searchstudent):
+def find_students(searchstudent, filter):
     cursor = mysql.connection.cursor(dictionary=True)
     search_query = "%" + searchstudent + "%"
-    cursor.execute("SELECT * FROM student WHERE ID LIKE %s OR first_name LIKE %s OR last_name LIKE %s OR gender LIKE %s OR course_code LIKE %s OR year_level LIKE %s", (search_query, search_query, search_query, search_query, search_query, search_query))
+    
+    if filter == 'all':
+        query = """
+            SELECT * FROM student
+            WHERE ID LIKE %s
+            OR first_name LIKE %s
+            OR last_name LIKE %s
+            OR (gender = %s)  -- Exact match for gender
+            OR year_level LIKE %s
+            OR course_code LIKE %s
+        """
+        cursor.execute(query, (search_query, search_query, search_query, searchstudent, search_query, search_query))
+    else:
+        if filter == 'gender':
+            gender_search = searchstudent + "%"
+            query = f"""
+                SELECT * FROM student
+                WHERE {filter} = %s  -- Exact match for gender
+            """
+            cursor.execute(query, (gender_search,))
+        else:
+            query = f"""
+                SELECT * FROM student
+                WHERE {filter} LIKE %s
+            """
+            cursor.execute(query, (search_query,))
+    
     students = cursor.fetchall()
     cursor.close()
     return students
@@ -45,3 +71,11 @@ def get_courseCode():
     course_code = cursor.fetchall()
     cursor.close()
     return course_code
+
+def check_student_ID(student_ID):
+    cursor = mysql.connection.cursor()
+    query = "SELECT ID FROM student where ID = %s"
+    cursor.execute(query, (student_ID,))
+    result = cursor.fetchone()
+    cursor.close()
+    return result

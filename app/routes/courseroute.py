@@ -7,8 +7,8 @@ course_bp = Blueprint('course', __name__)
 @course_bp.route('/course/')
 def course():
     courses = course_list()
-    colleges = get_collegeCode()
-    return render_template('course.html', courses=courses, colleges=colleges)
+    
+    return render_template('course.html', courses=courses )
 
 @course_bp.route('/course/add', methods=['GET', 'POST'])
 def add_course():
@@ -16,9 +16,16 @@ def add_course():
         course_code = request.form['course_code']
         course_name = request.form['course_name']
         college_code = request.form['college_code'].upper()
-        course_create(course_code, course_name, college_code)
+        if check_courseCode(course_code):
+            flash('Course code already exists!', 'error')
+        else:
+            course_create(course_code, course_name, college_code)
+            flash('Course added successfully!', 'success')
         return redirect('/course') 
-    return render_template('course.html')
+    colleges = get_collegeCode()
+    return render_template('addcourse.html', colleges=colleges)
+
+
 
 @course_bp.route('/course/search', methods=['GET', 'POST'])
 def search_course():
@@ -32,8 +39,8 @@ def search_course():
 @course_bp.route('/course/delete/<string:course_code>', methods=['DELETE'])
 def remove_course(course_code):
     if request.method == 'DELETE':
-        print(course_code)
         delete_course(course_code)
+        flash('Course deleted successfully!', 'success')
         return jsonify({'success': True})
 
 @course_bp.route('/course/edit', methods=['GET', 'POST'])
@@ -43,6 +50,7 @@ def edit_course():
         course_name = request.form.get('course_name')
         college_code = request.form.get('college_code').upper()
         update_course(course_code, course_name, college_code)
+        flash('Course edited successfully!', 'success')
         return redirect('/course/') 
     course_code = request.args.get('course_code')
     course_name = request.args.get('course_name')

@@ -44,3 +44,11 @@ def get_collegeCode():
     college_code = cursor.fetchall()
     cursor.close()
     return college_code
+
+def check_courseCode(course_code):
+    cursor = mysql.connection.cursor()
+    query = "SELECT course_code FROM course where course_code = %s"
+    cursor.execute(query, (course_code,))
+    result = cursor.fetchone()
+    cursor.close()
+    return result

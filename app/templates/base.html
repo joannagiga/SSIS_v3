@@ -15,8 +15,31 @@
   </head>
 
   <body>
+    {%with messages = get_flashed_messages(with_categories=true)%}
+      {%if messages%}
+        {%for category, message in messages%}
+          {%if category == 'error'%}
+          <div class = "alert alert-danger alert-dismissable show" role ="alert">
+            {{message}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {%else%}
+          <div class = "alert alert-success alert-dismissable show" role ="alert">
+            {{message}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          {%endif%}
+        {%endfor%}
+      {%endif%}
+    {%endwith%}
     {% block container1 %}{% endblock %}
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="{{url_for('static', filename='js/script.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
       integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

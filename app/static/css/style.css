@@ -133,3 +133,11 @@ td form, td button {
   outline: none;
   color: #000; 
 }
+.input-group-prepend label {
+  font-size: 14px; 
+  margin-top: 1.20rem; 
+  margin-bottom: 0.70rem; 
+}
+
+
+
