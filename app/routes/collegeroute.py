@@ -22,14 +22,22 @@ def add_college():
         return redirect('/college') 
     return render_template('addcollege.html')
 
+
+
 @college_bp.route('/college/search', methods=['GET', 'POST'])
 def search_college():
     colleges = []
     if request.method == 'POST':
         search_query = request.form.get('college_search')
-        if search_query:
-            colleges = find_college(search_query)
+        filter = request.form.get('filter')
+        if filter and search_query:
+            colleges = find_college(search_query, filter)
+        elif not filter and search_query:
+            # If no filter is selected, search across all fields
+            colleges = find_college(search_query, 'all')
     return render_template('college.html', colleges=colleges)
+
+
 
 @college_bp.route('/college/delete/<string:college_code>', methods=['DELETE'])
 def remove_college(college_code):

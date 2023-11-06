@@ -48,15 +48,25 @@
                 </div>
                 <div class="input-box">
                   <label for="year_level">Year Level:</label>
-                  <input type="text" id="year_level" name="year_level" placeholder="Enter Year Level" required>
+                  <select id="year_level" name="year_level" required>
+                    <option value="" disabled selected>Select Year Level</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                  </select>
                 </div>
                 <div class="input-box">
                   <label for="last_name">Last Name:</label>
                   <input type="text" id="last_name" name="last_name" placeholder="Enter Last Name" required>
                 </div>
-                <label class="gender-title">Gender</label>
-                <div class="gender-category">
-                  <input type="text" id="gender" name="gender" placeholder="Enter Gender" required>
+                <div class="input-box">
+                  <label for="gender">Gender:</label>
+                  <select id="gender" name="gender" required>
+                    <option value="" disabled selected>Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
                 </div>
                 <button type="submit" class="submit-button">SUBMIT</button>
               </div>

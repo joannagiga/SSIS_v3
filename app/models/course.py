@@ -16,13 +16,30 @@ def course_create(course_code, course_name, college_code):
     mysql.connection.commit()
     cursor.close()
     
-def find_course(course_search):
+def find_course(course_search, filter):
     cursor = mysql.connection.cursor(dictionary=True)
     search_query = "%" + course_search + "%"
-    cursor.execute("SELECT * FROM course WHERE course_code LIKE %s OR course_name LIKE %s OR college_code LIKE %s", (search_query, search_query, search_query ))
+    
+    if filter == 'all':
+        query = """
+            SELECT * FROM course
+            WHERE course_code LIKE %s
+            OR course_name LIKE %s
+            OR college_code LIKE %s
+            """
+        cursor.execute(query, (search_query, search_query, search_query))
+    else:
+        query = f"""
+            SELECT * FROM course
+            WHERE {filter} LIKE %s
+        """
+        cursor.execute(query, (search_query,))
+    
     courses = cursor.fetchall()
     cursor.close()
     return courses
+
+
 
 def delete_course(course_code):
     cursor = mysql.connection.cursor()

@@ -4,7 +4,7 @@ mysql = MySQL()
 
 def student_list():
     cursor = mysql.connection.cursor(dictionary=True)
-    query = "SELECT * FROM student"
+    query = "SELECT student.*, course.college_code FROM student JOIN course ON student.course_code = course.course_code"
     cursor.execute(query)
     students = cursor.fetchall()
     cursor.close()
@@ -30,7 +30,7 @@ def find_students(searchstudent, filter):
             OR (gender = %s)  -- Exact match for gender
             OR year_level LIKE %s
             OR course_code LIKE %s
-        """
+            """
         cursor.execute(query, (search_query, search_query, search_query, searchstudent, search_query, search_query))
     else:
         if filter == 'gender':
@@ -50,6 +50,8 @@ def find_students(searchstudent, filter):
     students = cursor.fetchall()
     cursor.close()
     return students
+
+
 
 def delete_student(stud_ID):
     cursor = mysql.connection.cursor()

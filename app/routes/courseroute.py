@@ -32,9 +32,16 @@ def search_course():
     courses = []
     if request.method == 'POST':
         search_query = request.form.get('course_search')
-        if search_query:
-            courses = find_course(search_query)
+        filter = request.form.get('filter')
+        if filter and search_query:
+            courses = find_course(search_query, filter)
+        elif not filter and search_query:
+            # If no filter is selected, search across all fields
+            courses = find_course(search_query, 'all')
     return render_template('course.html', courses=courses)
+
+
+
 
 @course_bp.route('/course/delete/<string:course_code>', methods=['DELETE'])
 def remove_course(course_code):

@@ -16,13 +16,29 @@ def college_create(college_code, college_name):
     mysql.connection.commit()
     cursor.close()
     
-def find_college(college_search):
+def find_college(college_search, filter):
     cursor = mysql.connection.cursor(dictionary=True)
     search_query = "%" + college_search + "%"
-    cursor.execute("SELECT * FROM college WHERE college_code LIKE %s OR college_name LIKE %s", (search_query, search_query ))
+    
+    if filter == 'all':
+        query = """
+            SELECT * FROM college
+            WHERE college_code LIKE %s
+            OR college_name LIKE %s
+            """
+        cursor.execute(query, (search_query, search_query))
+    else:
+        query = f"""
+            SELECT * FROM college
+            WHERE {filter} LIKE %s
+        """
+        cursor.execute(query, (search_query,))
+    
     colleges = cursor.fetchall()
-    cursor.close()
+    cursor.close() 
     return colleges
+
+
 
 def delete_college(college_code):
     cursor = mysql.connection.cursor()
