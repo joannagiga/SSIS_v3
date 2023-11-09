@@ -4,7 +4,12 @@ mysql = MySQL()
 
 def student_list():
     cursor = mysql.connection.cursor(dictionary=True)
-    query = "SELECT student.*, course.college_code FROM student JOIN course ON student.course_code = course.course_code"
+    query = """
+    SELECT student.*, CONCAT(college.college_name, ' (',course.college_code, ')') AS college_info
+    FROM student
+    JOIN course ON student.course_code = course.course_code
+    JOIN college ON course.college_code = college.college_code
+    """
     cursor.execute(query)
     students = cursor.fetchall()
     cursor.close()
@@ -23,26 +28,45 @@ def find_students(searchstudent, filter):
     
     if filter == 'all':
         query = """
-            SELECT * FROM student
+            SELECT student.*, CONCAT(course.college_code, ' (', college.college_name, ')') AS college_info
+            FROM student
+            JOIN course ON student.course_code = course.course_code
+            JOIN college ON course.college_code = college.college_code
             WHERE ID LIKE %s
             OR first_name LIKE %s
             OR last_name LIKE %s
             OR (gender = %s)  -- Exact match for gender
             OR year_level LIKE %s
             OR course_code LIKE %s
+            OR CONCAT(course.college_code, ' (', college.college_name, ')') LIKE %s  -- Search by college
             """
-        cursor.execute(query, (search_query, search_query, search_query, searchstudent, search_query, search_query))
+        cursor.execute(query, (search_query, search_query, search_query, searchstudent, search_query, search_query, search_query))
     else:
         if filter == 'gender':
             gender_search = searchstudent + "%"
             query = f"""
-                SELECT * FROM student
+                SELECT student.*, CONCAT(course.college_code, ' (', college.college_name, ')') AS college_info
+                FROM student
+                JOIN course ON student.course_code = course.course_code
+                JOIN college ON course.college_code = college.college_code
                 WHERE {filter} = %s  -- Exact match for gender
             """
             cursor.execute(query, (gender_search,))
+        elif filter == 'college_info':  # Handle the new filter for searching by college
+            query = """
+                SELECT student.*, CONCAT(course.college_code, ' (', college.college_name, ')') AS college_info
+                FROM student
+                JOIN course ON student.course_code = course.course_code
+                JOIN college ON course.college_code = college.college_code
+                WHERE CONCAT(course.college_code, ' (', college.college_name, ')') LIKE %s
+            """
+            cursor.execute(query, (search_query,))
         else:
             query = f"""
-                SELECT * FROM student
+                SELECT student.*, CONCAT(course.college_code, ' (', college.college_name, ')') AS college_info
+                FROM student
+                JOIN course ON student.course_code = course.course_code
+                JOIN college ON course.college_code = college.college_code
                 WHERE {filter} LIKE %s
             """
             cursor.execute(query, (search_query,))
