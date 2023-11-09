@@ -55,10 +55,14 @@
             <label for="last_name">Last Name</label>
             <input type="text" id="last_name" name="last_name" value="{{last_name}}" required>
             </div>
-            <label class="gender-title">Gender</label>
-            <div class="gender-category">
-            <input type="text" id="gender" name="gender" value="{{gender}}" required>
+            <div class="input-box">
+                <label for="gender">Gender:</label>
+                <select id="gender" name="gender" required>
+                    <option value="Male" {% if gender == "Male" %}selected{% endif %}>Male</option>
+                    <option value="Female" {% if gender == "Female" %}selected{% endif %}>Female</option>
+                </select>
             </div>
+            
             <button type="submit" class="submit-button">UPDATE</button>
         </div>
         </form>
