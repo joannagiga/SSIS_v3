@@ -23,54 +23,90 @@
     </nav>
     <!-- //NAVIGATION BAR -->
 
-        <!-- CREATE STUDENT -->
-        <div class="container">
-            <form method="post" action="/student/add">
-              <h2>Create Student</h2>
-              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-              <div class="student-details">
-                <div class="input-box">
+    
+ <!-- CREATE STUDENT -->
+ <div class="container">
+  <form method="post" action="/student/add" enctype="multipart/form-data">
+      <h2 class="text-center">Create Student</h2>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+      <!-- Add photo upload input -->
+      <div class="input-box justify-content-center text-center">
+          <div id="student_image_container" class="form-group text-center col-md-10 mx-auto">
+              <div style="display: flex; flex-direction: column; align-items: center; margin-top: 20px;">
+                  <div>
+                      <img id="student_info_image"
+                          src="{{ "https://res.cloudinary.com/dulew9heh/image/upload/v1701248545/image_nahubr.jpg" }}"
+                          alt="{{ id }}"><br>
+                  </div>
+                  <div>
+                      <input type="file" id="student_photo" name="student_photo" accept="image/*" hidden>
+                      <button id="upload-photo-button" type="button"
+                          class="btn btn-light col-md-12 mx-auto" style="margin-top: 10px; background-color: #008080; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">Upload Photo</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="row student-details">
+          <div class="col-md-6">
+              <div class="input-box">
                   <label for="student_ID">ID Number:</label>
-                  <input type="text" id="student_ID" name="student_ID" placeholder="Enter ID Number" required>
-                </div>
-                <div class="input-box">
-                  <label class="details">Course Code</label>
-                  <select id="course_code" name="course_code" placeholder="Enter Course Code" required>
+                  <input type="text" id="student_ID" name="student_ID" class="form-control"
+                      placeholder="Enter ID Number" required>
+              </div>
+          </div>
+          <div class="col-md-6">
+            <div class="input-box">
+                <label class="details" for="course_code">Course Code</label>
+                <select id="course_code" name="course_code" class="form-control" required>
                     <option value="" disabled selected>Enter Course Code</option>
                     {% for course in courses %}
                     <option value="{{ course.course_code }}">{{ course.course_code }}</option>
                     {% endfor %}
-                  </select>
-                </div>
-                <div class="input-box">
+                </select>
+            </div>
+        </div>
+          <div class="col-md-6">
+              <div class="input-box">
                   <label for="first_name">First Name:</label>
-                  <input type="text" id="first_name" name="first_name" placeholder="Enter First Name" required>
-                </div>
-                <div class="input-box">
-                  <label for="year_level">Year Level:</label>
-                  <select id="year_level" name="year_level" required>
+                  <input type="text" id="first_name" name="first_name" class="form-control"
+                      placeholder="Enter First Name" required>
+              </div>
+          </div>
+          <div class="col-md-6">
+            <div class="input-box">
+                <label for="year_level">Year Level:</label>
+                <select id="year_level" name="year_level" class="form-control" required>
                     <option value="" disabled selected>Select Year Level</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
-                  </select>
-                </div>
-                <div class="input-box">
-                  <label for="last_name">Last Name:</label>
-                  <input type="text" id="last_name" name="last_name" placeholder="Enter Last Name" required>
-                </div>
-                <div class="input-box">
+                </select>
+            </div>
+        </div>
+
+          <div class="col-md-6">
+            <div class="input-box">
+                <label for="last_name">Last Name:</label>
+                <input type="text" id="last_name" name="last_name" class="form-control"
+                    placeholder="Enter Last Name" required>
+            </div>
+        </div>
+          <div class="col-md-6">
+              <div class="input-box">
                   <label for="gender">Gender:</label>
-                  <select id="gender" name="gender" required>
-                    <option value="" disabled selected>Select Gender</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
+                  <select id="gender" name="gender" class="form-control" required>
+                      <option value="" disabled selected>Select Gender</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
                   </select>
-                </div>
-                <button type="submit" class="submit-button">SUBMIT</button>
               </div>
-            </form>
           </div>
-          
+          <button type="submit" class="btn btn-light col-md-6 mx-auto" style="margin-top: 10px; background-color: #008080; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">SUBMIT</button>
+
+      </div>
+  </form>
+</div>
 {% endblock%}

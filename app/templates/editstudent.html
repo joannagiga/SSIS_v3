@@ -21,50 +21,86 @@
         </div>
     </nav>
 
-    <!-- CREATE STUDENT -->
-    <div class="container">
-        <form  method="post">
-        <h2>Edit Student</h2>
-        <input type="hidden" name="csrf_token" value="{{csrf_token()}}">
-        <div class="student-details">
-            <div class="input-box">
-            <label for="student_id">ID Number:</label>
-            <input type="text" id="student_id" name="student_id" value="{{student_id}}" disabled required>
-            <input type="hidden" name="student_id" value="{{student_id}}">
+ <!-- EDIT STUDENT -->
+<div class="container">
+    <form method="post">
+        <h2 class="text-center">Edit Student</h2>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        
+        <div class="input-box justify-content-center text-center">
+            <div class="form-group text-center col-md-10 mx-auto">
+                <div style="display: flex; flex-direction: column; align-items: center; margin-top: 20px;">
+                    <div>
+                        <img id="student_info_image"
+                            src="{{ "https://res.cloudinary.com/dulew9heh/image/upload/v1701248545/image_nahubr.jpg" }}"
+                            alt="{{ id }}"><br>
+                    </div>
+                    <div>
+                        <input type="file" id="student_photo" name="student_photo" accept="image/*" hidden>
+                        <button id="upload-photo-button" type="button"
+                            class="btn btn-light col-md-12 mx-auto" style="margin-top: 10px; background-color: #008080; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">Upload Photo</button>
+                    </div>
+                </div>
             </div>
-            <div class="input-box">
-            <label class="details">Course Code</label>
-                <select id="course_code" name="course_code" placeholder="Enter Course Code" required>
-                <option value="{{course_code}}">{{course_code}}</option>
-                {% for course in courses %}
-                    {% if course.course_code != course_code %}
-                        <option value="{{course.course_code}}">{{course.course_code}}</option>
-                    {% endif %}
-                {% endfor %}  
-                </select>  
-            </div>
-            <div class="input-box">
-            <label for="first_name">First Name</label>
-            <input type="text" id="first_name" name="first_name" value="{{first_name}}" required>
-            </div>
-            <div class="input-box">
-            <label for="year_level">Year Level</label>
-            <input type="text" id="year_level" name="year_level" value="{{year_level}}" required>
-            </div>
-            <div class="input-box">
-            <label for="last_name">Last Name</label>
-            <input type="text" id="last_name" name="last_name" value="{{last_name}}" required>
-            </div>
-            <div class="input-box">
-                <label for="gender">Gender:</label>
-                <select id="gender" name="gender" required>
-                    <option value="Male" {% if gender == "Male" %}selected{% endif %}>Male</option>
-                    <option value="Female" {% if gender == "Female" %}selected{% endif %}>Female</option>
-                </select>
-            </div>
-            
-            <button type="submit" class="submit-button">UPDATE</button>
         </div>
-        </form>
-    </div>
+
+        <div class="row student-details">
+            <div class="col-md-6">
+                <div class="input-box">
+                    <label for="student_id">ID Number:</label>
+                    <input type="text" id="student_id" name="student_id" value="{{ student_id }}" disabled required>
+                    <input type="hidden" name="student_id" value="{{ student_id }}">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-box">
+                    <label class="details" for="course_code">Course Code</label>
+                    <select id="course_code" name="course_code" class="form-control" required>
+                        <option value="{{ course_code }}">{{ course_code }}</option>
+                        {% for course in courses %}
+                        {% if course.course_code != course_code %}
+                        <option value="{{ course.course_code }}">{{ course.course_code }}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-box">
+                    <label for="first_name">First Name:</label>
+                    <input type="text" id="first_name" name="first_name" value="{{ first_name }}" required>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-box">
+                    <label for="year_level">Year Level:</label>
+                    <select id="year_level" name="year_level" class="form-control" required>
+                        <option value="" disabled selected>Select Year Level</option>
+                        <option value="1" {% if year_level == "1" %}selected{% endif %}>1</option>
+                        <option value="2" {% if year_level == "2" %}selected{% endif %}>2</option>
+                        <option value="3" {% if year_level == "3" %}selected{% endif %}>3</option>
+                        <option value="4" {% if year_level == "4" %}selected{% endif %}>4</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-box">
+                    <label for="last_name">Last Name:</label>
+                    <input type="text" id="last_name" name="last_name" value="{{ last_name }}" required>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-box">
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender" required>
+                        <option value="Male" {% if gender == "Male" %}selected{% endif %}>Male</option>
+                        <option value="Female" {% if gender == "Female" %}selected{% endif %}>Female</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-light col-md-6 mx-auto" style="margin-top: 10px; background-color: #008080; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">UPDATE</button>
+        </div>
+    </form>
+</div>
+
 {% endblock%}

@@ -73,3 +73,26 @@ function cancelEdit() {
     document.getElementById('editForm').style.display = 'none';
 }
 
+// Add this script to handle file input and update the image preview
+document.addEventListener("DOMContentLoaded", function () {
+    const fileInput = document.getElementById("student_photo");
+    const imageContainer = document.getElementById("student_image_container");
+    const imagePreview = document.getElementById("student_info_image");
+    const uploadButton = document.getElementById("upload-photo-button");
+
+    uploadButton.addEventListener("click", function () {
+        fileInput.click();
+    });
+
+    fileInput.addEventListener("change", function () {
+        const file = fileInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                imagePreview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+});
+
