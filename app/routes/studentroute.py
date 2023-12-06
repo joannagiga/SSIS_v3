@@ -1,6 +1,11 @@
 from flask import *
 from app.models.student import *
 from flask_wtf import *
+from config import CLOUDINARY_FOLDER
+import re
+import cloudinary
+from cloudinary.uploader import upload as cloudinary_upload
+from cloudinary.utils import cloudinary_url
 
 student_bp = Blueprint('student', __name__)
 
@@ -20,12 +25,15 @@ def add_student():
         gender = request.form['gender'].capitalize()
         course_code = request.form['course_code'].upper()
         year_level = request.form['year_level']
-        if check_student_ID(student_ID):
+        image_url = request.form['image_url']
+        if not re.match(r'^\d{4}-\d{4}$', student_ID):
+            flash('Invalid Student ID format. Follow YYYY-NNNN format.', 'error')
+        elif check_student_ID(student_ID):
             flash('ID already exists!', 'error')
         else:
-            student_create(student_ID, first_name, last_name, gender, course_code, year_level)
+            student_create(student_ID, first_name, last_name, gender, course_code, year_level, image_url)
             flash('Student added successfully!', 'success')
-        return redirect('/student') 
+            return redirect('/student') 
     courses = get_courseCode()
     return render_template('addstudents.html', courses=courses)
 
@@ -39,7 +47,6 @@ def search_students():
         if filter and search_query:
             students = find_students(search_query, filter)
         elif not filter and search_query:
-            # If no filter is selected, search across all fields
             students = find_students(search_query, 'all')
     return render_template('students.html', students=students)
 
@@ -52,8 +59,8 @@ def remove_student(stud_ID):
         return jsonify({'success': True})
 
 
-@student_bp.route('/student/edit', methods=['GET', 'POST'])
-def edit_student():
+@student_bp.route('/student/edit/<string:id>', methods=['GET', 'POST'])
+def edit_student(id):
     if request.method == 'POST':
         student_id = request.form.get('student_id')
         first_name = request.form.get('first_name').title()
@@ -61,17 +68,35 @@ def edit_student():
         gender = request.form.get('gender').capitalize()
         course_code = request.form.get('course_code').upper()
         year_level = request.form.get('year_level')
-        update_student(student_id, first_name, last_name, gender, course_code, year_level)
+        image_url = request.form.get('image_url')
+        update_student(student_id, first_name, last_name, gender, course_code, year_level, image_url)
         flash('Student edited successfully!', 'success')
         return redirect('/student/') 
-    student_id = request.args.get('student_id')
-    first_name = request.args.get('first_name')
-    last_name = request.args.get('last_name')
-    gender = request.args.get('gender')
-    course_code = request.args.get('course_code')
-    year_level = request.args.get('year_level')
+    student_info = get_student_info(id)
+    first_name = student_info['first_name']
+    last_name = student_info['last_name']
+    gender = student_info['gender']
+    course_code = student_info['course_code']
+    year_level = student_info['year_level']
+    image_url = student_info['image_url']
     courses = get_courseCode()
-    return render_template('editstudent.html', student_id=student_id, first_name=first_name, last_name=last_name, gender=gender, course_code=course_code, year_level=year_level, courses=courses)
+    return render_template('editstudent.html', student_id=id, first_name=first_name, last_name=last_name, gender=gender, course_code=course_code, year_level=year_level, courses=courses, image_url=image_url)
 
 
+@student_bp.route('/upload/cloudinary/', methods=['POST'])
+def upload_to_cloudinary():
+    file = request.files.get('file')
 
+    if file:
+        upload_result = cloudinary_upload(
+            file, folder=CLOUDINARY_FOLDER)
+
+        return jsonify({
+            'is_success': True,
+            'url': upload_result['secure_url']
+        })
+
+    return jsonify({
+        'is_success': False,
+        'error': 'Missing file'
+    })

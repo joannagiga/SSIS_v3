@@ -9,15 +9,16 @@ def student_list():
     FROM student
     JOIN course ON student.course_code = course.course_code
     JOIN college ON course.college_code = college.college_code
+    ORDER BY student.ID
     """
     cursor.execute(query)
     students = cursor.fetchall()
     cursor.close()
     return students
 
-def student_create(ID, first_name, last_name, gender, course_code, year_level):
+def student_create(ID, first_name, last_name, gender, course_code, year_level, image_url):
     cursor = mysql.connection.cursor()
-    cursor.execute("INSERT INTO student (ID, first_name, last_name, gender, course_code, year_level) VALUES (%s, %s, %s, %s, %s, %s)", (ID, first_name, last_name, gender, course_code, year_level))
+    cursor.execute("INSERT INTO student (ID, first_name, last_name, gender, course_code, year_level, image_url) VALUES (%s, %s, %s, %s, %s, %s, %s)", (ID, first_name, last_name, gender, course_code, year_level, image_url))
     mysql.connection.commit()
     cursor.close()
     
@@ -28,46 +29,47 @@ def find_students(searchstudent, filter):
     
     if filter == 'all':
         query = """
-            SELECT student.*, CONCAT(course.college_code, ' (', college.college_name, ')') AS college_info
-            FROM student
-            JOIN course ON student.course_code = course.course_code
-            JOIN college ON course.college_code = college.college_code
-            WHERE ID LIKE %s
-            OR first_name LIKE %s
-            OR last_name LIKE %s
-            OR (gender = %s)  -- Exact match for gender
-            OR year_level LIKE %s
-            OR course_code LIKE %s
-            OR CONCAT(course.college_code, ' (', college.college_name, ')') LIKE %s  -- Search by college
+            SELECT s.*, CONCAT(c.course_code, ' (', cl.college_name, ')') AS college_info
+            FROM student AS s
+            JOIN course AS c ON s.course_code = c.course_code
+            JOIN college AS cl ON c.college_code = cl.college_code
+            WHERE s.ID LIKE %s
+            OR s.first_name LIKE %s
+            OR s.last_name LIKE %s
+            OR s.gender = %s
+            OR s.year_level LIKE %s
+            OR s.course_code LIKE %s
+            OR CONCAT(c.course_code, ' (', cl.college_name, ')') LIKE %s
             """
         cursor.execute(query, (search_query, search_query, search_query, searchstudent, search_query, search_query, search_query))
     else:
         if filter == 'gender':
-            gender_search = searchstudent + "%"
-            query = f"""
-                SELECT student.*, CONCAT(course.college_code, ' (', college.college_name, ')') AS college_info
-                FROM student
-                JOIN course ON student.course_code = course.course_code
-                JOIN college ON course.college_code = college.college_code
-                WHERE {filter} = %s  -- Exact match for gender
+            gender_search = searchstudent
+            query = """
+                SELECT s.*, CONCAT(c.course_code, ' (', cl.college_name, ')') AS college_info
+                FROM student AS s
+                JOIN course AS c ON s.course_code = c.course_code
+                JOIN college AS cl ON c.college_code = cl.college_code
+                WHERE s.gender = %s
             """
             cursor.execute(query, (gender_search,))
-        elif filter == 'college_info':  # Handle the new filter for searching by college
+        elif filter == 'college_info':
             query = """
-                SELECT student.*, CONCAT(course.college_code, ' (', college.college_name, ')') AS college_info
-                FROM student
-                JOIN course ON student.course_code = course.course_code
-                JOIN college ON course.college_code = college.college_code
-                WHERE CONCAT(course.college_code, ' (', college.college_name, ')') LIKE %s
+                SELECT s.*, CONCAT(c.course_code, ' (', cl.college_name, ')') AS college_info
+                FROM student AS s
+                JOIN course AS c ON s.course_code = c.course_code
+                JOIN college AS cl ON c.college_code = cl.college_code
+                WHERE CONCAT(c.course_code, ' (', cl.college_name, ')') LIKE %s
             """
             cursor.execute(query, (search_query,))
         else:
+            # Use the table alias for course_code in the WHERE clause
             query = f"""
-                SELECT student.*, CONCAT(course.college_code, ' (', college.college_name, ')') AS college_info
-                FROM student
-                JOIN course ON student.course_code = course.course_code
-                JOIN college ON course.college_code = college.college_code
-                WHERE {filter} LIKE %s
+                SELECT s.*, CONCAT(c.course_code, ' (', cl.college_name, ')') AS college_info
+                FROM student AS s
+                JOIN course AS c ON s.course_code = c.course_code
+                JOIN college AS cl ON c.college_code = cl.college_code
+                WHERE s.{filter} LIKE %s
             """
             cursor.execute(query, (search_query,))
     
@@ -75,18 +77,16 @@ def find_students(searchstudent, filter):
     cursor.close()
     return students
 
-
-
 def delete_student(stud_ID):
     cursor = mysql.connection.cursor()
     cursor.execute("DELETE FROM student WHERE ID = %s", (stud_ID,))
     mysql.connection.commit()
     cursor.close()
 
-def update_student(student_id, first_name, last_name, gender, course_code, year_level):
+def update_student(student_id, first_name, last_name, gender, course_code, year_level, image_url):
     cursor = mysql.connection.cursor()
-    update_query = "UPDATE student SET first_name = %s, last_name = %s, gender = %s, course_code = %s, year_level = %s WHERE ID = %s"
-    cursor.execute(update_query, (first_name, last_name, gender, course_code, year_level, student_id))
+    update_query = "UPDATE student SET first_name = %s, last_name = %s, gender = %s, course_code = %s, year_level = %s,  image_url = %s WHERE ID = %s"
+    cursor.execute(update_query, (first_name, last_name, gender, course_code, year_level, image_url, student_id))
     mysql.connection.commit()
     cursor.close()
     
@@ -105,3 +105,12 @@ def check_student_ID(student_ID):
     result = cursor.fetchone()
     cursor.close()
     return result
+
+def get_student_info(student_ID):
+    cursor = mysql.connection.cursor(dictionary=True)
+    query = "SELECT * FROM student where ID = %s"
+    cursor.execute(query, (student_ID,))
+    result = cursor.fetchone()
+    cursor.close()
+    return result
+

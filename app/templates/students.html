@@ -73,7 +73,7 @@
       <tbody>
         {% for student in students %}
         <tr>
-          <td></td>
+          <td> <img id="student_photo" src="{{ student.image_url or "https://res.cloudinary.com/dra6xlpn6/image/upload/v1701788899/samples/cloudinary-icon.png" }}" alt="{{ student.id }}"> </td>
           <td>{{student.ID}}</td>
           <td>{{student.first_name}}</td>
           <td>{{student.last_name}}</td>
@@ -84,12 +84,7 @@
           <td>
             <form action="/student/edit" method="get">
               <input type="hidden" name="student_id" value="{{ student.ID }}">
-              <input type="hidden" name="first_name" value="{{ student.first_name }}">
-              <input type="hidden" name="last_name" value="{{ student.last_name }}">
-              <input type="hidden" name="gender" value="{{ student.gender }}">
-              <input type="hidden" name="course_code" value="{{ student.course_code }}">
-              <input type="hidden" name="year_level" value="{{ student.year_level }}">
-              <button type="submit" class="btn btn-success col-md-10"><i class="fas fa-edit"></i>Edit</button>
+              <a href="{{ url_for('student.edit_student', id = student.ID) }}" class="btn btn-success col-md-10" type="submit">Edit</a>
             </form>
             <button type="button" class="btn btn-danger col-md-10" id="deleteStudent" student-id="{{student.ID}}" 
             csrf-token="{{csrf_token()}}" onclick="deleteStudent(this)"><i class="far fa-trash-alt"></i>Delete</button>

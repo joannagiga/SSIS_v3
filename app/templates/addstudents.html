@@ -32,17 +32,17 @@
 
       <!-- Add photo upload input -->
       <div class="input-box justify-content-center text-center">
-          <div id="student_image_container" class="form-group text-center col-md-10 mx-auto">
+          <div class="form-group text-center col-md-10 mx-auto">
               <div style="display: flex; flex-direction: column; align-items: center; margin-top: 20px;">
-                  <div>
+                  <div id="student_image_container">
                       <img id="student_info_image"
-                          src="{{ "https://res.cloudinary.com/dulew9heh/image/upload/v1701248545/image_nahubr.jpg" }}"
-                          alt="{{ id }}"><br>
+                          src="{{ "https://res.cloudinary.com/dra6xlpn6/image/upload/v1701788899/samples/cloudinary-icon.png" }}"
+                          alt="{{ id }}">
                   </div>
                   <div>
-                      <input type="file" id="student_photo" name="student_photo" accept="image/*" hidden>
-                      <button id="upload-photo-button" type="button"
-                          class="btn btn-light col-md-12 mx-auto" style="margin-top: 10px; background-color: #008080; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">Upload Photo</button>
+                      <input id="image_url" type="text" name="image_url" value="https://res.cloudinary.com/dra6xlpn6/image/upload/v1701788899/samples/cloudinary-icon.png" hidden>
+                      <input type="file" id="upload-file" accept="image/*" hidden>
+                      <button id="upload-button" type="button" class="btn btn-light col-md-12 mx-auto" style="margin-top: 10px; background-color: #FFFFFF; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">Upload Photo</button>
                   </div>
               </div>
           </div>
@@ -52,8 +52,7 @@
           <div class="col-md-6">
               <div class="input-box">
                   <label for="student_ID">ID Number:</label>
-                  <input type="text" id="student_ID" name="student_ID" class="form-control"
-                      placeholder="Enter ID Number" required>
+                  <input type="text" id="student_ID" name="student_ID" class="form-control" placeholder="Enter ID Number" required>
               </div>
           </div>
           <div class="col-md-6">
@@ -105,8 +104,52 @@
               </div>
           </div>
           <button type="submit" class="btn btn-light col-md-6 mx-auto" style="margin-top: 10px; background-color: #008080; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">SUBMIT</button>
-
       </div>
   </form>
 </div>
+
+<script>
+  const fileInput = document.getElementById('upload-file');
+  const fileButton = document.getElementById('upload-button');
+  const imagePreview = document.getElementById('student_info_image');
+  const imageUrlInput = document.getElementById('image_url');
+  const imagePreviewContainer = document.getElementById('student_image_container');
+
+  fileButton.addEventListener('click', () => {
+      fileInput.click();
+  });
+
+  fileInput.addEventListener('change', async () => {
+      try {
+          const formData = new FormData();
+          formData.append("file", fileInput.files[0]);
+          formData.append("csrf_token", "{{csrf_token()}}");
+
+          const response = await fetch("{{url_for('student.upload_to_cloudinary')}}", {
+              method: 'POST',
+              body: formData
+          });
+
+          const data = await response.json();
+
+          if (data && data.is_success) {
+
+              const img = document.createElement("img");
+              img.id = 'student_info_image';
+              img.alt = "New Image Photo"
+              img.src = data.url
+
+              imagePreviewContainer.innerHTML = '';
+              imagePreviewContainer.appendChild(img);
+
+              imageUrlInput.value = data.url;
+          } else {
+              // Handle the case where the upload was not successful
+              console.error("Upload failed:", data);
+          }
+      } catch (error) {
+          console.error("An error occurred:", error);
+      }
+  });
+</script>
 {% endblock%}

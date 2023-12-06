@@ -174,7 +174,6 @@ h2 {
     display: flex;
 }
 
-/* Styles for the smaller student photo in the input box */
 #student_photo {
     height: 60px;
     width: 60px;
