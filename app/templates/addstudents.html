@@ -109,47 +109,68 @@
 </div>
 
 <script>
-  const fileInput = document.getElementById('upload-file');
-  const fileButton = document.getElementById('upload-button');
-  const imagePreview = document.getElementById('student_info_image');
-  const imageUrlInput = document.getElementById('image_url');
-  const imagePreviewContainer = document.getElementById('student_image_container');
-
-  fileButton.addEventListener('click', () => {
-      fileInput.click();
-  });
-
-  fileInput.addEventListener('change', async () => {
-      try {
-          const formData = new FormData();
-          formData.append("file", fileInput.files[0]);
-          formData.append("csrf_token", "{{csrf_token()}}");
-
-          const response = await fetch("{{url_for('student.upload_to_cloudinary')}}", {
-              method: 'POST',
-              body: formData
-          });
-
-          const data = await response.json();
-
-          if (data && data.is_success) {
-
-              const img = document.createElement("img");
-              img.id = 'student_info_image';
-              img.alt = "New Image Photo"
-              img.src = data.url
-
-              imagePreviewContainer.innerHTML = '';
-              imagePreviewContainer.appendChild(img);
-
-              imageUrlInput.value = data.url;
-          } else {
-              // Handle the case where the upload was not successful
-              console.error("Upload failed:", data);
-          }
-      } catch (error) {
-          console.error("An error occurred:", error);
-      }
-  });
-</script>
+    const fileInput = document.getElementById('upload-file');
+    const fileButton = document.getElementById('upload-button');
+    const imagePreview = document.getElementById('student_info_image');
+    const imageUrlInput = document.getElementById('image_url');
+    const imagePreviewContainer = document.getElementById('student_image_container');
+  
+    fileButton.addEventListener('click', () => {
+        fileInput.click();
+    });
+  
+    fileInput.addEventListener('change', async () => {
+        const maxSizeMB = 1; // Maximum allowed file size in megabytes
+        const allowedExtensions = ['jpg', 'jpeg', 'png', 'gif']; // Allowed image file extensions
+  
+        try {
+            const file = fileInput.files[0];
+  
+            // Check if the file size exceeds the limit
+            if (file.size > maxSizeMB * 1024 * 1024) {
+                alert(`File size exceeds ${maxSizeMB} MB. Please choose a smaller file.`);
+                fileInput.value = ''; // Clear the file input
+                return;
+            }
+  
+            // Check if the file extension is allowed
+            const fileExtension = file.name.split('.').pop().toLowerCase();
+            if (!allowedExtensions.includes(fileExtension)) {
+                alert('Invalid. Please choose a valid image file (jpg, jpeg, png).');
+                fileInput.value = ''; // Clear the file input
+                return;
+            }
+  
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("csrf_token", "{{csrf_token()}}");
+  
+            const response = await fetch("{{url_for('student.upload_to_cloudinary')}}", {
+                method: 'POST',
+                body: formData
+            });
+  
+            const data = await response.json();
+  
+            if (data && data.is_success) {
+  
+                const img = document.createElement("img");
+                img.id = 'student_info_image';
+                img.alt = "New Image Photo"
+                img.src = data.url;
+  
+                imagePreviewContainer.innerHTML = '';
+                imagePreviewContainer.appendChild(img);
+  
+                imageUrlInput.value = data.url;
+            } else {
+                // Handle the case where the upload was not successful
+                console.error("Upload failed:", data);
+            }
+        } catch (error) {
+            console.error("An error occurred:", error);
+        }
+    });
+  </script>
+  
 {% endblock%}
